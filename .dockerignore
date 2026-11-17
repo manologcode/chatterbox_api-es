@@ -1,6 +1,6 @@
 .git/
-models/
-voices/
+/models/
+/voices/
 .venv/
 .env
 **/__pycache__/

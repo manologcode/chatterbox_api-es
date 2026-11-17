@@ -1,5 +1,5 @@
 # Modelos descargados (se generan automáticamente al arrancar la API)
-models/
+/models/
 
 # Voces subidas (solo se versiona el .gitkeep)
 voices/*

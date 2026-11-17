@@ -1,0 +1,47 @@
+services:
+  chatterbox-es-api:
+    image: manologcode/chatterbox_api-es:latest
+    pull_policy: always
+    container_name: chatterbox-es-api
+    restart: unless-stopped
+    ports:
+      - "8020:8000"
+    shm_size: '7gb'
+    environment:
+      - HF_HOME=/models/huggingface
+      - VOICES_DIR=/app/voices
+      - PYTHONUNBUFFERED=1
+      - PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+      - TTS_DEVICE=auto
+      - TTS_WARMUP=1
+      - HF_TOKEN=${HF_TOKEN:-}
+    volumes:
+      - ./models:/models
+      - ./voices:/app/voices
+    labels:
+      ui.group: "xtts"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  long_text_tts:
+    image: manologcode/long_text_tts:latest
+    pull_policy: always
+    restart: always
+    container_name: long_text_tts
+    ports:
+      - "5008:5008"
+    tmpfs:
+      - /app/audio_files
+      - /app/temp_audio
+    environment:
+      - TTS_ENGINE=chatterbox
+      - SERVER_URL_COQUI_XTTS=http://chatterbox-es-api:8000
+    labels:
+      ui.group: "xtts"
+    depends_on:
+      - chatterbox-es-api

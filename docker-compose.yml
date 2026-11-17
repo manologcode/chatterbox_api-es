@@ -1,7 +1,7 @@
 services:
   chatterbox-es-api:
     image: manologcode/chatterbox_api-es:latest
-    build: .
+    pull_policy: always
     container_name: chatterbox-es-api
     restart: unless-stopped
     ports:
