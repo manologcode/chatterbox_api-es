@@ -1,0 +1,21 @@
+services:
+  chatterbox-es-api:
+    image: manologcode/chatterbox_api-es:latest
+    build: .
+    container_name: chatterbox-es-api
+    restart: unless-stopped
+    ports:
+      - "8020:8000"
+    gpus: all
+    shm_size: "2gb"
+    environment:
+      - HF_HOME=/models/huggingface
+      - VOICES_DIR=/app/voices
+      - PYTHONUNBUFFERED=1
+      - PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+      - TTS_DEVICE=auto
+      - TTS_WARMUP=1
+      - HF_TOKEN=${HF_TOKEN:-}
+    volumes:
+      - ./models:/models
+      - ./voices:/app/voices

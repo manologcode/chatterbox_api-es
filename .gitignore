@@ -1,0 +1,19 @@
+# Modelos descargados (se generan automáticamente al arrancar la API)
+models/
+
+# Voces subidas (solo se versiona el .gitkeep)
+voices/*
+!voices/.gitkeep
+
+# Entornos virtuales y secretos
+.venv/
+venv/
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Sistema
+.DS_Store
